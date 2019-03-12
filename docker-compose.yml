@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+
+  odfe-node1:
+    image: amazon/opendistro-for-elasticsearch:0.7.0
+    container_name: odfe-node1
+    environment:
+      - cluster.name=odfe-cluster
+      - bootstrap.memory_lock=true # along with the memlock settings below, disables swapping
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # minimum and maximum Java heap size, recommend setting both to 50% of system RAM
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - odfe-data1:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9600:9600 # required for Performance Analyzer
+    networks:
+      - odfe-net
+
+  odfe-node2:
+    image: amazon/opendistro-for-elasticsearch:0.7.0
+    container_name: odfe-node2
+    environment:
+      - cluster.name=odfe-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.zen.ping.unicast.hosts=odfe-node1
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - odfe-data2:/usr/share/elasticsearch/data
+    networks:
+      - odfe-net
+
+  kibana:
+    image: amazon/opendistro-for-elasticsearch-kibana:0.7.0
+    container_name: odfe-kibana
+    ports:
+      - 5601:5601
+    expose:
+      - "5601"
+    environment:
+      ELASTICSEARCH_URL: https://odfe-node1:9200
+    networks:
+      - odfe-net
+
+volumes:
+  odfe-data1:
+  odfe-data2:
+
+networks:
+  odfe-net:
