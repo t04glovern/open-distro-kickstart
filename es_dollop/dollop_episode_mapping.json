@@ -1,0 +1,117 @@
+{
+    "episodes": {
+        "mappings": {
+            "episode": {
+                "properties": {
+                    "audio_s3_location": {
+                        "type": "keyword"
+                    },
+                    "audio_type": {
+                        "type": "keyword"
+                    },
+                    "audio_url": {
+                        "type": "keyword"
+                    },
+                    "published_time": {
+                        "type": "date",
+                        "format": "yyyy:MM:dd HH:mm:ss"
+                    },
+                    "source_feed": {
+                        "type": "keyword"
+                    },
+                    "speakerNames": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    },
+                    "summary": {
+                        "type": "text"
+                    },
+                    "title": {
+                        "type": "text",
+                        "fields": {
+                            "keyword": {
+                                "type": "keyword",
+                                "ignore_above": 256
+                            }
+                        }
+                    },
+                    "transcript": {
+                        "type": "text"
+                    },
+                    "transcript_entities": {
+                        "properties": {
+                            "DATE": {
+                                "type": "text",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            },
+                            "EVENT": {
+                                "type": "text",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            },
+                            "LOCATION": {
+                                "type": "text",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            },
+                            "ORGANIZATION": {
+                                "type": "text",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            },
+                            "OTHER": {
+                                "type": "text",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            },
+                            "PERSON": {
+                                "type": "text",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            },
+                            "Products_and_Titles": {
+                                "type": "text",
+                                "fields": {
+                                    "keyword": {
+                                        "type": "keyword",
+                                        "ignore_above": 256
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

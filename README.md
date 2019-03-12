@@ -49,3 +49,33 @@ wget https://d3g5vo6xdbdb9a.cloudfront.net/downloads/perftop/perf-top-0.7.0.0-LI
 ./perf-top-linux --dashboard dashboards/ClusterThreadAnalysis.json          --endpoint localhost:9600
 ./perf-top-linux --dashboard dashboards/NodeAnalysis.json                   --endpoint localhost:9600
 ```
+
+## Data Ingestion
+
+You need [elasticdump](https://github.com/taskrabbit/elasticsearch-dump) to load in the data
+
+```bash
+elasticdump \
+    --input=es_dollop/dollop_episode_mapping.json \
+    --output=http://admin:admin@localhost:9200/episodes --insecure \
+    --type=mapping
+
+elasticdump \
+    --input=es_dollop/dollop_episode.json \
+    --output=http://admin:admin@localhost:9200/episodes --insecure \
+    --type=data
+
+elasticdump \
+    --input=es_dollop/dollop_paragraph_mapping.json \
+    --output=http://admin:admin@localhost:9200/paragraphs --insecure \
+    --type=mapping
+
+elasticdump \
+    --input=es_dollop/dollop_paragraph.json \
+    --output=http://admin:admin@localhost:9200/paragraphs --insecure \
+    --type=data
+```
+
+Load in the dashboard from [es_dollop/dashboard.json](es_dollop/dashboard.json)
+
+![Dollop Example](img/dollop-example.png)
