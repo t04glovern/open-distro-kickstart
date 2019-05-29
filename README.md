@@ -12,6 +12,12 @@ docker-compose up -d
 
 Kibana should now be available on [http://localhost:5601](http://localhost:5601)
 
+***NOTE:** If your cluster fails to start you might need to increaase the max virtual memory using the following*
+
+```bash
+sudo sysctl -w vm.max_map_count=262144
+```
+
 ### Cluster Down
 
 ```bash
