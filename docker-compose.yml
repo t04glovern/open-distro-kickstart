@@ -3,17 +3,22 @@ version: '3'
 services:
 
   odfe-node1:
-    image: amazon/opendistro-for-elasticsearch:0.9.0
+    image: amazon/opendistro-for-elasticsearch:1.8.0
     container_name: odfe-node1
     environment:
       - cluster.name=odfe-cluster
+      - node.name=odfe-node1
+      - discovery.seed_hosts=odfe-node1,odfe-node2
+      - cluster.initial_master_nodes=odfe-node1,odfe-node2
       - bootstrap.memory_lock=true # along with the memlock settings below, disables swapping
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # minimum and maximum Java heap size, recommend setting both to 50% of system RAM
-      - opendistro_security.ssl.http.enabled=false
     ulimits:
       memlock:
         soft: -1
         hard: -1
+      nofile:
+        soft: 65536 # maximum number of open files for the Elasticsearch user, set to at least 65536 on modern systems
+        hard: 65536
     volumes:
       - odfe-data1:/usr/share/elasticsearch/data
     ports:
@@ -23,25 +28,29 @@ services:
       - odfe-net
 
   odfe-node2:
-    image: amazon/opendistro-for-elasticsearch:0.9.0
+    image: amazon/opendistro-for-elasticsearch:1.8.0
     container_name: odfe-node2
     environment:
-      - cluster.name=odfe-cluster
       - bootstrap.memory_lock=true
+      - cluster.initial_master_nodes=odfe-node1,odfe-node2
+      - cluster.name=odfe-cluster
+      - discovery.seed_hosts=odfe-node1,odfe-node2
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-      - discovery.zen.ping.unicast.hosts=odfe-node1
-      - opendistro_security.ssl.http.enabled=false
+      - node.name=odfe-node2
     ulimits:
       memlock:
         soft: -1
         hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
     volumes:
       - odfe-data2:/usr/share/elasticsearch/data
     networks:
       - odfe-net
 
   kibana:
-    image: amazon/opendistro-for-elasticsearch-kibana:0.9.0
+    image: amazon/opendistro-for-elasticsearch-kibana:1.8.0
     container_name: odfe-kibana
     ports:
       - 5601:5601

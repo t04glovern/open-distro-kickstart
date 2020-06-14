@@ -31,7 +31,7 @@ If URL for binary doesnt work, get the latest versions from [https://opendistro.
 ### MacOS
 
 ```bash
-wget https://d3g5vo6xdbdb9a.cloudfront.net/downloads/perftop/perf-top-0.7.0.0-MACOS.zip && \
+wget https://d3g5vo6xdbdb9a.cloudfront.net/downloads/perftop/perf-top-1.8.0.0-MACOS.zip && \
     unzip perf-top-0.7.0.0-MACOS.zip && \
     rm perf-top-0.7.0.0-MACOS.zip
 
@@ -45,7 +45,7 @@ wget https://d3g5vo6xdbdb9a.cloudfront.net/downloads/perftop/perf-top-0.7.0.0-MA
 ### Linux
 
 ```bash
-wget https://d3g5vo6xdbdb9a.cloudfront.net/downloads/perftop/perf-top-0.7.0.0-LINUX.zip && \
+wget https://d3g5vo6xdbdb9a.cloudfront.net/downloads/perftop/perf-top-1.8.0.0-LINUX.zip && \
     unzip perf-top-0.7.0.0-LINUX.zip && \
     rm perf-top-0.7.0.0-LINUX.zip
 
@@ -61,24 +61,24 @@ wget https://d3g5vo6xdbdb9a.cloudfront.net/downloads/perftop/perf-top-0.7.0.0-LI
 You need [elasticdump](https://github.com/taskrabbit/elasticsearch-dump) to load in the data
 
 ```bash
-elasticdump \
+NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \
     --input=es_dollop/dollop_episode_mapping.json \
-    --output=http://admin:admin@localhost:9200/episodes --insecure \
+    --output=https://admin:admin@localhost:9200/episodes \
     --type=mapping
 
-elasticdump \
+NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \
     --input=es_dollop/dollop_episode.json \
-    --output=http://admin:admin@localhost:9200/episodes --insecure \
+    --output=https://admin:admin@localhost:9200/episodes \
     --type=data
 
-elasticdump \
+NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \
     --input=es_dollop/dollop_paragraph_mapping.json \
-    --output=http://admin:admin@localhost:9200/paragraphs --insecure \
+    --output=https://admin:admin@localhost:9200/paragraphs \
     --type=mapping
 
-elasticdump \
+NODE_TLS_REJECT_UNAUTHORIZED=0 elasticdump \
     --input=es_dollop/dollop_paragraph.json \
-    --output=http://admin:admin@localhost:9200/paragraphs --insecure \
+    --output=https://admin:admin@localhost:9200/paragraphs \
     --type=data
 ```
 
